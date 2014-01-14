@@ -721,4 +721,8 @@ config SLP_PROCESS_MON
 	  Providing monitoring important processes. Users can register the process
 	  with sysfs.
 
+config CPU_UNDERVOLTING
+        tristate "Several undervolting interfaces"
+        default y
+
 endif # MISC_DEVICES
