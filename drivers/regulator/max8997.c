@@ -537,8 +537,8 @@ static int max8997_set_voltage_buck(struct regulator_dev *rdev,
 			}
 
 			/* no predefine regulator found */
-			dev_warn(max8997->dev, "BUCK1 no predefined:%d,%d\n",
-				min_vol, max_vol);
+			//dev_warn(max8997->dev, "BUCK1 no predefined:%d,%d\n",
+				//min_vol, max_vol);
 			max8997->buck1_idx = 7;
 			max8997->buck1_vol[max8997->buck1_idx] = i;
 			ret = max8997_get_voltage_register(rdev, &reg, &shift,
