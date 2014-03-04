@@ -48,9 +48,7 @@ extern struct busfreq_table *exynos4_busfreq_table;
 #endif
 
 static unsigned long max_voltages[2] = {CPU_UV_MV_MAX, 1300000};
-#ifdef CONFIG_CPU_EXYNOS4210
-static int num_int_freqs = 3;
-#else
+#ifndef CONFIG_CPU_EXYNOS4210
 static int num_int_freqs = 6;
 #endif
 void customvoltage_updateintvolt(unsigned long * int_voltages)
@@ -69,7 +67,7 @@ ssize_t show_UV_uV_table(struct cpufreq_policy *policy, char *buf) {
 		for (i = exynos_info->max_support_idx; i<=exynos_info->min_support_idx; i++)
 		{
 			if(exynos_info->freq_table[i].frequency==CPUFREQ_ENTRY_INVALID) continue;
-			len += sprintf(buf + len, "%dmhz: %d uV\n", 
+			len += sprintf(buf + len, "%dMHz: %d uV\n", 
 				exynos_info->freq_table[i].frequency/1000,
 				exynos_info->volt_table[i]);
 		}
@@ -85,7 +83,7 @@ ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf)
 		for (i = exynos_info->max_support_idx; i<=exynos_info->min_support_idx; i++)
 		{
 			if(exynos_info->freq_table[i].frequency==CPUFREQ_ENTRY_INVALID) continue;
-			len += sprintf(buf + len, "%dmhz: %d mV\n",
+			len += sprintf(buf + len, "%dMHz: %d mV\n",
 			exynos_info->freq_table[i].frequency/1000,
 			((exynos_info->volt_table[i] % 1000) + exynos_info->volt_table[i])/1000);
 		}
@@ -350,20 +348,23 @@ ssize_t customvoltage_armvolt_write(struct device * dev, struct device_attribute
 	return store_UV_mV_table(NULL, buf, size);
 }
 
+#ifndef CONFIG_CPU_EXYNOS4210
 static ssize_t customvoltage_intvolt_read(struct device * dev, struct device_attribute * attr, char * buf)
 {
 	int i, j = 0;
 
     for (i = 0; i < num_int_freqs; i++)
 	{
-		j += sprintf(&buf[j], "%umhz: %u mV\n", 
+		j += sprintf(&buf[j], "%uMHz: %u mV\n", 
 			exynos4_busfreq_table[i].mem_clk, 
 			exynos4_busfreq_table[i].volt / 1000);
 	}
 
 	return j;
 }
+#endif
 
+#ifndef CONFIG_CPU_EXYNOS4210
 static ssize_t customvoltage_intvolt_write(struct device * dev, struct device_attribute * attr, const char * buf, size_t size)
 {
     int i = 0, j = 0, next_freq = 0;
@@ -402,6 +403,7 @@ static ssize_t customvoltage_intvolt_write(struct device * dev, struct device_at
 
     return size;
 }
+#endif
 
 static ssize_t customvoltage_maxarmvolt_read(struct device * dev, struct device_attribute * attr, char * buf)
 {
@@ -422,11 +424,14 @@ static ssize_t customvoltage_maxarmvolt_write(struct device * dev, struct device
     return size;
 }
 
+#ifndef CONFIG_CPU_EXYNOS4210
 static ssize_t customvoltage_maxintvolt_read(struct device * dev, struct device_attribute * attr, char * buf)
 {
     return sprintf(buf, "%lu mV\n", max_voltages[1] / 1000);
 }
+#endif
 
+#ifndef CONFIG_CPU_EXYNOS4210
 static ssize_t customvoltage_maxintvolt_write(struct device * dev, struct device_attribute * attr, const char * buf, size_t size)
 {
     unsigned long max_volt;
@@ -440,6 +445,7 @@ static ssize_t customvoltage_maxintvolt_write(struct device * dev, struct device
 
     return size;
 }
+#endif
 
 static ssize_t customvoltage_version(struct device * dev, struct device_attribute * attr, char * buf)
 {
@@ -447,9 +453,13 @@ static ssize_t customvoltage_version(struct device * dev, struct device_attribut
 }
 
 static DEVICE_ATTR(arm_volt, S_IRUGO | S_IWUGO, customvoltage_armvolt_read, customvoltage_armvolt_write);
+#ifndef CONFIG_CPU_EXYNOS4210
 static DEVICE_ATTR(int_volt, S_IRUGO | S_IWUGO, customvoltage_intvolt_read, customvoltage_intvolt_write);
+#endif
 static DEVICE_ATTR(max_arm_volt, S_IRUGO | S_IWUGO, customvoltage_maxarmvolt_read, customvoltage_maxarmvolt_write);
+#ifndef CONFIG_CPU_EXYNOS4210
 static DEVICE_ATTR(max_int_volt, S_IRUGO | S_IWUGO, customvoltage_maxintvolt_read, customvoltage_maxintvolt_write);
+#endif
 static DEVICE_ATTR(version, S_IRUGO , customvoltage_version, NULL);
 
 static struct attribute *customvoltage_attributes[] = 
