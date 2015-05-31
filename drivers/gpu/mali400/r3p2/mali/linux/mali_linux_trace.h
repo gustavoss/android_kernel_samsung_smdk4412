@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -24,10 +24,10 @@
 #define TRACE_INCLUDE_FILE mali_linux_trace
 
 /**
- * Define the tracepoint used to communicate the status of a GPU. Called 
+ * Define the tracepoint used to communicate the status of a GPU. Called
  * when a GPU turns on or turns off.
  *
- * @param event_id The type of the event. This parameter is a bitfield 
+ * @param event_id The type of the event. This parameter is a bitfield
  *  encoding the type of the event.
  *
  * @param d0 First data parameter.
@@ -38,7 +38,7 @@
  */
 TRACE_EVENT(mali_timeline_event,
 
-    TP_PROTO(unsigned int event_id, unsigned int d0, unsigned int d1, 
+    TP_PROTO(unsigned int event_id, unsigned int d0, unsigned int d1,
         unsigned int d2, unsigned int d3, unsigned int d4),
 
     TP_ARGS(event_id, d0, d1, d2, d3, d4),
@@ -123,4 +123,3 @@ TRACE_EVENT(mali_sw_counters,
 
 /* This part must exist outside the header guard. */
 #include <trace/define_trace.h>
-

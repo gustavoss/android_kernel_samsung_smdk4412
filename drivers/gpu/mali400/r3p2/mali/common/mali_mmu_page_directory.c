@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2011-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -448,7 +448,7 @@ _mali_osk_errcode_t _mali_ukk_query_mmu_page_table_dump_size( _mali_uk_query_mmu
 	struct mali_session_data * session_data;
 
 	MALI_DEBUG_ASSERT_POINTER(args);
-  	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
+	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
 
 	session_data = (struct mali_session_data *)(args->ctx);
 
@@ -463,8 +463,8 @@ _mali_osk_errcode_t _mali_ukk_dump_mmu_page_table( _mali_uk_dump_mmu_page_table_
 	struct dump_info info = { 0, 0, 0, NULL };
 	struct mali_session_data * session_data;
 
-  	MALI_DEBUG_ASSERT_POINTER(args);
-  	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
+	MALI_DEBUG_ASSERT_POINTER(args);
+	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
 	MALI_CHECK_NON_NULL(args->buffer, _MALI_OSK_ERR_INVALID_ARGS);
 
 	session_data = (struct mali_session_data *)(args->ctx);

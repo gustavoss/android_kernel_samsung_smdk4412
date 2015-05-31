@@ -1,9 +1,9 @@
 #
 # Copyright (C) 2010-2011 ARM Limited. All rights reserved.
-# 
+#
 # This program is free software and is provided to you under the terms of the GNU General Public License version 2
 # as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
-# 
+#
 # A copy of the licence is included with the program, and can also be obtained from Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
@@ -12,7 +12,7 @@
 
 # set up defaults if not defined by the user
 TIMESTAMP ?= default
-OS_MEMORY_KERNEL_BUFFER_SIZE_IN_MB ?= 16
+OS_MEMORY_KERNEL_BUFFER_SIZE_IN_MB ?= 24
 USING_GPU_UTILIZATION ?= 1
 PROFILING_SKIP_PP_JOBS ?= 0
 PROFILING_SKIP_PP_AND_GP_JOBS ?= 0
@@ -44,7 +44,6 @@ MALI_PLATFORM_FILES = $(subst $(srctree)/$(src)/,,$(wildcard $(srctree)/$(src)/p
 # For customer releases the Linux Device Drivers will be provided as ARM proprietary and GPL releases:
 # The ARM proprietary product will only include the license/proprietary directory
 # The GPL product will only include the license/gpl directory
-$(warning Current directory is $(srctree)/$(src) from $(shell pwd))
 ifeq ($(wildcard $(srctree)/$(src)/linux/license/gpl/*),)
     ccflags-y += -I$(srctree)/$(src)/linux/license/proprietary
     ifeq ($(CONFIG_MALI400_PROFILING),y)
@@ -124,6 +123,11 @@ ifneq ($(MALI_PLATFORM_FILES),)
 	mali-y += $(MALI_PLATFORM_FILES:.c=.o)
 endif
 
+ifeq ($(CONFIG_GPU_CLOCK_CONTROL),y)
+mali-y += common/gpu_clock_control.o
+mali-y += common/gpu_voltage_control.o
+endif
+
 mali-$(CONFIG_MALI400_PROFILING) += linux/mali_ukk_profiling.o
 mali-$(CONFIG_MALI400_PROFILING) += linux/mali_osk_profiling.o
 
@@ -145,7 +149,7 @@ ccflags-y += -DPROFILING_SKIP_PP_AND_GP_JOBS=$(PROFILING_SKIP_PP_AND_GP_JOBS)
 ccflags-y += -DMALI_PP_SCHEDULER_FORCE_NO_JOB_OVERLAP=$(MALI_PP_SCHEDULER_FORCE_NO_JOB_OVERLAP)
 ccflags-y += -DMALI_PP_SCHEDULER_KEEP_SUB_JOB_STARTS_ALIGNED=$(MALI_PP_SCHEDULER_KEEP_SUB_JOB_STARTS_ALIGNED)
 ccflags-y += -DMALI_PP_SCHEDULER_FORCE_NO_JOB_OVERLAP_BETWEEN_APPS=$(MALI_PP_SCHEDULER_FORCE_NO_JOB_OVERLAP_BETWEEN_APPS)
-ccflags-y += -DMALI_STATE_TRACKING=1
+ccflags-y += -DMALI_STATE_TRACKING=0
 ccflags-y += -DMALI_OS_MEMORY_KERNEL_BUFFER_SIZE_IN_MB=$(OS_MEMORY_KERNEL_BUFFER_SIZE_IN_MB)
 ccflags-y += -DUSING_GPU_UTILIZATION=$(USING_GPU_UTILIZATION)
 
@@ -158,7 +162,7 @@ ccflags-$(CONFIG_MALI400_DEBUG) += -DDEBUG
 
 # Use our defines when compiling
 ccflags-y += -I$(srctree)/$(src) -I$(srctree)/$(src)/include -I$(srctree)/$(src)/common -I$(srctree)/$(src)/linux -I$(srctree)/$(src)/platform
-# MALI_SEC 
+# MALI_SEC
 ccflags-y += -I$(srctree)/$(src)/../ump/include -I$(srctree)/$(src)/include/linux/mali
 
 # Get subversion revision number, fall back to only ${MALI_RELEASE_NAME} if no svn info is available

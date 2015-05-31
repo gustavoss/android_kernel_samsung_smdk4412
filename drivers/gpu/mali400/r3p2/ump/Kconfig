@@ -4,4 +4,3 @@ config UMP_DEBUG
 	default n
 	---help---
 	  This enabled extra debug checks and messages in UMP.
-

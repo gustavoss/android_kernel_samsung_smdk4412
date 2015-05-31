@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -38,6 +38,10 @@
 #include "mali_profiling_internal.h"
 #endif
 
+#ifdef CONFIG_GPU_CLOCK_CONTROL
+#include <gpu_clock_control.h>
+#include <gpu_voltage_control.h>
+#endif
 
 /* Mali GPU memory. Real values come from module parameter or from device specific data */
 unsigned int mali_dedicated_mem_start = 0;
@@ -942,6 +946,11 @@ _mali_osk_errcode_t mali_initialize_subsystems(void)
 	/* Initialize the GPU utilization tracking */
 	err = mali_utilization_init();
 	if (_MALI_OSK_ERR_OK != err) goto utilization_init_failed;
+
+#ifdef CONFIG_GPU_CLOCK_CONTROL
+    gpu_clock_control_start();
+    gpu_voltage_control_start();
+#endif
 
 	/* Allowing the system to be turned off */
 	_mali_osk_pm_dev_ref_dec();

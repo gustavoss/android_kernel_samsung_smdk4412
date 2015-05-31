@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -38,7 +38,7 @@ static u32 last_utilization_gp = 0 ;
 static u32 last_utilization_pp = 0 ;
 
 #ifndef CONFIG_PM_DEVFREQ	/* MALI_SEC */
-static u32 mali_utilization_timeout = 100;
+unsigned int mali_utilization_timeout = 1000;
 #endif
 void (*mali_utilization_callback)(struct mali_gpu_utilization_data *data) = NULL;
 

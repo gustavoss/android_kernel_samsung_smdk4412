@@ -1,9 +1,9 @@
 /**
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -55,7 +55,7 @@
 extern const char *__malidrv_build_info(void);
 
 /* Module parameter to control log level */
-int mali_debug_level = 2;
+int mali_debug_level = 0;
 module_param(mali_debug_level, int, S_IRUSR | S_IWUSR | S_IWGRP | S_IRGRP | S_IROTH); /* rw-rw-r-- */
 MODULE_PARM_DESC(mali_debug_level, "Higher number, more dmesg output");
 
@@ -96,6 +96,58 @@ MODULE_PARM_DESC(mali_max_pp_cores_group_2, "Limit the number of PP cores to use
 #include "mali_user_settings_db.h"
 EXPORT_SYMBOL(mali_set_user_setting);
 EXPORT_SYMBOL(mali_get_user_setting);
+
+extern int step0_clk;
+module_param(step0_clk, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step0_clk, "Mali Current step0_clk");
+extern int step0_vol;
+module_param(step0_vol, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step0_vol, "Mali Current step0_vol");
+extern int step1_clk;
+module_param(step1_clk, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step1_clk, "Mali Current step1_clk");
+extern int step0_up;
+module_param(step0_up, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step0_up, "Mali Current step0_up");
+extern int step1_down;
+module_param(step1_down, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step1_down, "Mali Current step1_down");
+extern int step1_vol;
+module_param(step1_vol, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step1_vol, "Mali Current step1_vol");
+extern int step2_clk;
+module_param(step2_clk, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step2_clk, "Mali Current step2_clk");
+extern int step1_up;
+module_param(step1_up, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step1_up, "Mali Current step1_up");
+extern int step2_down;
+module_param(step2_down, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step2_down, "Mali Current step2_down");
+extern int step2_vol;
+module_param(step2_vol, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step2_vol, "Mali Current step2_vol");
+extern int step3_clk;
+module_param(step3_clk, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step3_clk, "Mali Current step3_clk");
+extern int step2_up;
+module_param(step2_up, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step2_up, "Mali Current step2_up");
+extern int step3_down;
+module_param(step3_down, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step3_down, "Mali Current step3_down");
+extern int step3_vol;
+module_param(step3_vol, int, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP| S_IROTH); /* rw-rw-r-- */
+MODULE_PARM_DESC(step3_vol, "Mali Current step3_vol");
+#ifdef CONFIG_CPU_EXYNOS4210
+int mali_use_vpll = 0;
+module_param(mali_use_vpll, int, S_IRUSR | S_IWUSR | S_IWGRP | S_IRGRP | S_IROTH); /* rw--rw--r-- */
+MODULE_PARM_DESC(mali_use_vpll, "Mali Use VPLL for Clock");
+#endif
+//thanks to michyprima@XDA
+extern int mali_dvfs_utilization;
+module_param(mali_dvfs_utilization, int, S_IRUSR | S_IRGRP | S_IROTH); /* r--r--r-- */
+MODULE_PARM_DESC(mali_dvfs_utilization, "Mali Current Utilization");
 
 static char mali_dev_name[] = "mali"; /* should be const, but the functions we call requires non-cost */
 

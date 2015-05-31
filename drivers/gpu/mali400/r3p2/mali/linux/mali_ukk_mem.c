@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -131,7 +131,7 @@ int mem_map_ext_wrapper(struct mali_session_data *session_data, _mali_uk_map_ext
         if (_MALI_OSK_ERR_OK == err_code)
         {
             /* Rollback */
-           	_mali_uk_unmap_external_mem_s uk_args_unmap;
+		_mali_uk_unmap_external_mem_s uk_args_unmap;
 
             uk_args_unmap.ctx = session_data;
             uk_args_unmap.cookie = uk_args.cookie;
@@ -216,7 +216,7 @@ int mem_attach_ump_wrapper(struct mali_session_data *session_data, _mali_uk_atta
         if (_MALI_OSK_ERR_OK == err_code)
         {
             /* Rollback */
-           	_mali_uk_release_ump_mem_s uk_args_unmap;
+		_mali_uk_release_ump_mem_s uk_args_unmap;
 
             uk_args_unmap.ctx = session_data;
             uk_args_unmap.cookie = uk_args.cookie;

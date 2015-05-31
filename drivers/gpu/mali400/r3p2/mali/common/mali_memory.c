@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -561,8 +561,8 @@ _mali_osk_errcode_t _mali_ukk_attach_ump_mem( _mali_uk_attach_ump_mem_s *args )
 	mali_memory_allocation * descriptor;
 	int md;
 
-  	MALI_DEBUG_ASSERT_POINTER(args);
-  	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
+	MALI_DEBUG_ASSERT_POINTER(args);
+	MALI_CHECK_NON_NULL(args->ctx, _MALI_OSK_ERR_INVALID_ARGS);
 
 	session_data = (struct mali_session_data *)args->ctx;
 	MALI_CHECK_NON_NULL(session_data, _MALI_OSK_ERR_INVALID_ARGS);
@@ -995,7 +995,7 @@ _mali_osk_errcode_t _mali_ukk_mem_mmap( _mali_uk_mem_mmap_s *args )
 	if (0 == mali_allocation_engine_allocate_memory(memory_engine, descriptor, physical_memory_allocators, &session_data->memory_head))
 	{
 		/* We do not FLUSH nor TLB_ZAP on MMAP, since we do both of those on job start*/
-	   	_mali_osk_lock_signal(session_data->memory_lock, _MALI_OSK_LOCKMODE_RW);
+		_mali_osk_lock_signal(session_data->memory_lock, _MALI_OSK_LOCKMODE_RW);
 
 		args->mapping = descriptor->mapping;
 		args->cookie = (u32)descriptor;
@@ -1005,7 +1005,7 @@ _mali_osk_errcode_t _mali_ukk_mem_mmap( _mali_uk_mem_mmap_s *args )
 	}
 	else
 	{
-	   	_mali_osk_lock_signal(session_data->memory_lock, _MALI_OSK_LOCKMODE_RW);
+		_mali_osk_lock_signal(session_data->memory_lock, _MALI_OSK_LOCKMODE_RW);
 		/* OOM, but not a fatal error */
 		MALI_DEBUG_PRINT(4, ("Memory allocation failure, OOM\n"));
 		_mali_osk_free(descriptor);
@@ -1189,7 +1189,7 @@ void mali_mmu_release_table_page(u32 pa)
 
 	MALI_DEBUG_PRINT(4, ("Releasing table page 0x%08X to the cache\n", pa));
 
-   	_mali_osk_lock_wait(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
+	_mali_osk_lock_wait(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
 
 	/* find the entry this address belongs to */
 	/* first check the partial list */
@@ -1213,7 +1213,7 @@ void mali_mmu_release_table_page(u32 pa)
 				_mali_osk_free(alloc->usage_map);
 				_mali_osk_free(alloc);
 			}
-		   	_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
+			_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
 			MALI_DEBUG_PRINT(4, ("(partial list)Released table page 0x%08X to the cache\n", pa));
 			return;
 		}
@@ -1246,7 +1246,7 @@ void mali_mmu_release_table_page(u32 pa)
 				_mali_osk_list_move(&alloc->list, &page_table_cache.partial);
 			}
 
-		   	_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
+			_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
 			MALI_DEBUG_PRINT(4, ("(full list)Released table page 0x%08X to the cache\n", pa));
 			return;
 		}
@@ -1254,7 +1254,7 @@ void mali_mmu_release_table_page(u32 pa)
 
 	MALI_DEBUG_PRINT(1, ("pa 0x%x not found in the page table cache\n", (void*)pa));
 
-   	_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
+	_mali_osk_lock_signal(page_table_cache.lock, _MALI_OSK_LOCKMODE_RW);
 }
 
 static _mali_osk_errcode_t mali_mmu_page_table_cache_create(void)

@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2012 ARM Limited. All rights reserved.
- * 
+ *
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- * 
+ *
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -278,7 +278,7 @@ _mali_osk_errcode_t _ump_ukk_release( _ump_uk_release_s *release_info )
 	}
 
 	_mali_osk_lock_signal(session_data->lock, _MALI_OSK_LOCKMODE_RW);
- 	DBG_MSG_IF(1, _MALI_OSK_ERR_OK != ret, ("UMP memory with ID %u does not belong to this session.\n", secure_id));
+	DBG_MSG_IF(1, _MALI_OSK_ERR_OK != ret, ("UMP memory with ID %u does not belong to this session.\n", secure_id));
 
 	DBG_MSG(4, ("_ump_ukk_release() returning 0x%x\n", ret));
 	return ret;
