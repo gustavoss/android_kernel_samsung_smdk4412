@@ -50,7 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // target part does not match the device type that the ISSP program is
 // configured for.
 #define ERASE_ERROR    3
-// ERASE_ERROR means that the bulk erase step failed. 
+// ERASE_ERROR means that the bulk erase step failed.
 #define BLOCK_ERROR    4
 // BLOCK_ERROR means that a step in programming a Flash block or the verify
 // of the block failed.

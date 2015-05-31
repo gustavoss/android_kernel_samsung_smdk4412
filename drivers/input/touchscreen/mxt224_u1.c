@@ -434,7 +434,6 @@ static void mxt224_ta_probe(bool ta_status)
 	unsigned int register_address = 7;
 	/*u8 calcfg; */
 	u8 noise_threshold;
-	u8 movfilter;
 	u8 calcfg_dis;
 	u8 calcfg_en;
 	u8 charge_time;
@@ -1107,7 +1106,7 @@ static int __devinit mxt224_init_touch_driver(struct mxt224_data *data)
 {
 	struct object_t *object_table;
 	u32 read_crc = 0;
-	u32 calc_crc;
+	u32 calc_crc = 0;
 	u16 crc_address;
 	u16 dummy;
 	int i;
@@ -1210,9 +1209,7 @@ static int __devinit mxt224_init_touch_driver(struct mxt224_data *data)
 	return ret;
 }
 
-#if defined(CONFIG_KEYBOARD_CYPRESS_TOUCH_BLN) && defined(CONFIG_TOUCHKEY_BLN)
 void (*mxt224_touch_cb)(void) = NULL;
-#endif
 
 static void report_input_data(struct mxt224_data *data)
 {
@@ -1340,9 +1337,9 @@ static void report_input_data(struct mxt224_data *data)
 				level);
 			copy_data->lock_status = 1;
 		}
-		#if defined(CONFIG_KEYBOARD_CYPRESS_TOUCH_BLN) && defined(CONFIG_TOUCHKEY_BLN)
-		if(mxt224_touch_cb!=NULL) (*mxt224_touch_cb)();
-		#endif
+		if (touch_is_pressed && mxt224_touch_cb != NULL) {
+       (*mxt224_touch_cb)();
+     }
 	}
 }
 
@@ -1498,7 +1495,7 @@ static int Check_Err_Condition(void)
 
 static void median_err_setting(void)
 {
-	u16 obj_address;
+	u16 obj_address = 0;
 	u16 size_one;
 	u8 value, state;
 	bool ta_status_check;
