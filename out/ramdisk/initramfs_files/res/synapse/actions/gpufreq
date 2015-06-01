@@ -1,0 +1,12 @@
+if [ -f $1 ];then
+	if [[ ! -z $2 ]]; then
+		echo $2 > $1
+	fi
+FREQ=$(cat $1);
+VPLL_CLKS=[54, 66, 330, 440, 520];
+if [[ "${VPLL_CLKS[*]}" == *"$FREQ"* ]]; then
+echo VPLL
+else
+echo NOVPLL
+fi
+fi

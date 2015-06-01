@@ -687,3 +687,50 @@ service flash_recovery /system/bin/install-recovery.sh
 on property:persist.sys.recovery_update=true
     start flash_recovery
 
+<<<<<<< HEAD
+=======
+service racoon /system/bin/racoon
+    class main
+    socket racoon stream 600 system system
+    # IKE uses UDP port 500. Racoon will setuid to vpn after binding the port.
+    group vpn net_admin inet
+    disabled
+    oneshot
+
+service mtpd /system/bin/mtpd
+    class main
+    socket mtpd stream 600 system system
+    user vpn
+    group vpn net_admin inet net_raw
+    disabled
+    oneshot
+
+service keystore /system/bin/keystore /data/misc/keystore
+    class main
+    user keystore
+    group keystore drmrpc
+
+service dumpstate /system/bin/dumpstate -s
+    class main
+    socket dumpstate stream 0660 shell log
+    disabled
+    oneshot
+
+service mdnsd /system/bin/mdnsd
+    class main
+    user mdnsr
+    group inet net_raw
+    socket mdnsd stream 0660 mdnsr inet
+    disabled
+    oneshot
+
+service pre-recovery /system/bin/uncrypt
+    class main
+    disabled
+    oneshot
+
+service postinit /sbin/ext/post-init.sh
+	class core
+	user root
+	oneshot
+>>>>>>> 9eb36a5... ramdisk: synapse support
